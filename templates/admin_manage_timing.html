@@ -1,0 +1,164 @@
+{%include 'admin_header.html'%}
+<body style="background-image: url(/static/filmi2.jpg); background-repeat: no-repeat; background-size: cover; color: white; position: relative;">
+
+    <div class="overlay"></div>
+    <center>
+        <div class="form-container">
+            <form method="post">
+                {% if check%}
+                <table>
+                    <tr>
+                        <th>Timing Name</th>
+                        <td><input type="text" value="{{check.timing_name}}" name="name"></td>
+                    </tr>
+                    <tr>
+                        <th>Time</th>
+                        <td><input type="time" value="{{check.time}}" name="time"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan="2"><input type="submit" name="update"></td>
+                    </tr>
+                </table>
+                {% else %}
+                <h1>Manage Timing</h1>
+                <table>
+                    <tr>
+                        <th>Timing Name</th>
+                        <td><input type="text" name="name"></td>
+                    </tr>
+                    <tr>
+                        <th>Time</th>
+                        <td><input type="time" name="time"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan="2"><input type="submit" value="Submit" name="sub"></td>
+                    </tr>
+                </table>
+                {% endif %}
+            </form>
+        </div>
+        <div class="officer-list">
+            <table>
+                <tr>
+                    <th>sl.no</th>
+                    <th style="padding: 5px;">Timing name</th>
+                    <th style="padding: 5px;">Time</th>
+                    <th style="padding: 5px;">Actions</th>
+                </tr>
+                {% for i in data %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.timing_name}}</td>
+                    <td>{{i.time}}</td>
+                    <td>
+                        <a href="/timing_update/{{i.id}}" class="btn">Update</a>
+                        <a href="/timing_delete/{{i.id}}" class="btn delete-btn">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </center>
+    <br><br><br><br><br><br><br><br><br>
+
+    {%include 'footer.html'%}
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        position: relative;
+        color: white;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+
+    .form-container {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+        width: 70%;
+    }
+
+    h1 {
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #fff;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    td {
+        background-color: rgba(8, 8, 8, 0.9);
+    }
+
+    input[type="text"], input[type="time"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+    }
+
+    .submit-btn input[type="submit"] {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .submit-btn input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .btn {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+        margin-left: 10px;
+    }
+
+    .delete-btn:hover {
+        background-color: #c82333;
+    }
+
+    .officer-list {
+        margin-top: 20px;
+        width: 70%;
+    }
+</style>

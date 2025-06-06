@@ -1,0 +1,110 @@
+{% include 'theater_header.html' %}
+
+<body style="background-image: url(/static/filmi3.jpg); background-repeat: no-repeat; background-size: cover; color: white; position: relative;">
+    
+    <div class="overlay"></div>
+    
+    <center>
+        <div class="form-container">
+            <form method="post">
+                <h1>Allocate Film</h1>
+                <table>
+                    <tr>
+                        <th>Film</th>
+                        <td>
+                            <select name="filmname">
+                                <option selected disabled hidden>select</option>
+                                {% for i in d %}
+                                <option value="{{i.id}}">{{i.film_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Screen</th>
+                        <td>
+                            <select name="screenname">
+                                <option selected disabled hidden>select</option>
+                                {% for i in u %}
+                                <option value="{{i.id}}">{{i.screen_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Timing</th>
+                        <td>
+                            <select name="timing">
+                                <option selected disabled hidden>select</option>
+                                {% for i in o %}
+                                <option value="{{i.id}}">{{i.timing_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <td><input type="date" name="date"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan="2"><input type="submit" value="Submit" name="sub"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </center>
+<br><br><br><br><br><br><br><br><br><br>
+    {% include 'footer.html' %}
+
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        position: relative;
+        color: white;
+    }
+    
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+    
+    .form-container {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px auto;
+        width: 50%;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #fff;
+    }
+    
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+    
+    td {
+        background-color: rgba(8, 8, 8, 0.9);
+    }
+    
+    tr:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+</style>

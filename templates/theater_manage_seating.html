@@ -1,0 +1,179 @@
+{% include 'theater_header.html' %}
+
+<body style="background-image: url(/static/filmi3.jpg); background-repeat: no-repeat; background-size: cover; color: white; position: relative;">
+
+    <div class="overlay"></div>
+
+    <center>
+        <div class="form-container">
+            <form method="post">
+                {% if check %}
+                <table>
+                    <tr>
+                        <th>Select Type</th>
+                        <td>
+                            <select name="type_name" value="{{check.type_name}}">
+                                <option selected disabled hidden>select</option>
+                                {% for i in d %}
+                                <option value="{{i.id}}">{{i.type_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Row Name</th>
+                        <td><input type="text" value="{{check.row_name}}" name="row"></td>
+                    </tr>
+                    <tr>
+                        <th>Seat Number</th>
+                        <td><input type="text" value="{{check.seat_number}}" name="num"></td>
+                    </tr>
+                    <tr>
+                        <th>Rate</th>
+                        <td><input type="text" value="{{check.rate}}" name="rate"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan="2">
+                            <input type="submit" name="update">
+                        </td>
+                    </tr>
+                </table>
+                {% else %}
+                
+                <h1>Manage Seating</h1>
+                <table>
+                    <tr>
+                        <th>Select Type</th>
+                        <td>
+                            <select name="type_name">
+                                <option selected disabled hidden>select</option>
+                                {% for i in d %}
+                                <option value="{{i.id}}">{{i.type_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Row Name</th>
+                        <td><input type="text" name="row"></td>
+                    </tr>
+                    <tr>
+                        <th>Seat Number</th>
+                        <td><input type="text" name="num"></td>
+                    </tr>
+                    <tr>
+                        <th>Rate</th>
+                        <td><input type="text" name="rate"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan="2">
+                            <input type="submit" value="Submit" name="sub">
+                        </td>
+                    </tr>
+                </table>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Sl. No</th>
+                    <th>Row Name</th>
+                    <th>Seat Number</th>
+                    <th>Rate</th>
+                    <th>Actions</th>
+                </tr>
+            
+                {% for i in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.row_name }}</td>
+                    <td>{{ i.seat_number }}</td>
+                    <td>{{ i.rate }}</td>
+                    <td>
+                        <a href="/seating_update/{{ i.id }}" class="btn">Update</a>
+                        <a href="/seating_delete/{{ i.id }}" class="btn delete-btn">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </center>
+    <br><br><br><br><br><br><br><br><br><br>
+
+    {% include 'footer.html' %}
+
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        position: relative;
+        color: white;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+
+    .form-container, .table-container {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px auto;
+        width: 70%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #fff;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    td {
+        background-color: rgba(8, 8, 8, 0.9);
+    }
+
+    tr:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+        margin-left: 10px;
+    }
+
+    .delete-btn:hover {
+        background-color: #c82333;
+    }
+</style>

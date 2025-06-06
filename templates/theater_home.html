@@ -1,0 +1,37 @@
+{% include 'theater_header.html' %}
+<style>
+    body {
+        background: url("/static/filmi2.jpg") no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+        color: white;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6); /* Black overlay */
+        z-index: 1;
+    }
+
+    center {
+        position: relative;
+        z-index: 2;
+        padding-top: 20%;
+    }
+</style>
+
+<body>
+    <center>    
+        <h1 style="font-size: 90px;">Welcome Theater!</h1>
+    </center>
+</body>
+</html>
+<br><br><br><br><br><br><br><br><br>
+{% include 'footer.html' %}

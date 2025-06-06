@@ -1,0 +1,114 @@
+{% include 'public_header.html' %}
+
+<body style="background-image: url(/static/filmi2.jpg); background-repeat: no-repeat; background-size: cover; color: white; position: relative;">
+
+    <div class="overlay"></div>
+
+    <center>
+        <div class="signup-container">
+            <h2 class="form-title">Create an Account</h2>
+            <form method="post">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <td><input type="text" name="name" placeholder="Enter your full name" required></td>
+                    </tr>
+                    <tr>
+                        <th>City</th>
+                        <td><input type="text" name="city" placeholder="Enter your city" required></td>
+                    </tr>
+                    <tr>
+                        <th>Pincode</th>
+                        <td><input type="text" name="pin" placeholder="Enter your pincode" required></td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td><input type="text" name="phone" placeholder="Enter your phone number" required></td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td><input type="email" name="email" placeholder="Enter your email" required></td>
+                    </tr>
+                    <tr>
+                        <th>Username</th>
+                        <td><input type="text" name="uname" placeholder="Choose a username" required></td>
+                    </tr>
+                    <tr>
+                        <th>Password</th>
+                        <td><input type="password" name="pwd" placeholder="Create a password" required></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan="2">
+                            <input type="submit" value="Register" name="submit" class="btn">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </center>
+
+    {% include 'footer.html' %}
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        position: relative;
+        color: white;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+
+    .signup-container {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+        width: 40%;
+        margin: 20px auto;
+        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        color: white;
+    }
+
+    input[type="text"], input[type="password"], input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+    }
+
+    .btn {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+</style>

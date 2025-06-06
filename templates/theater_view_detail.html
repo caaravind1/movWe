@@ -1,0 +1,78 @@
+{% include 'theater_header.html' %}
+
+<body style="background-image: url(/static/filmi3.jpg); background-repeat: no-repeat; background-size: cover; color: white; position: relative;">
+
+    <div class="overlay"></div>
+
+    <center>
+        <div class="table-container">
+            <h1>Film Allocation Details</h1>
+            <table>
+                <tr>
+                    <th>Film</th>
+                    <th>Time</th>
+                    <th>Screen</th>
+                </tr>
+                <tr>
+                    <td>{{ data.allocate.film.film_name }}</td>
+                    <td>{{ data.allocate.timing.timing_name }}</td>
+                    <td>{{ data.allocate.screen.screen_name }}</td>
+                </tr>
+            </table>
+        </div>
+    </center>
+    <br><br><br><br><br><br><br><br><br><br>
+
+    {% include 'footer.html' %}
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        position: relative;
+        color: white;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+
+    .table-container {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px auto;
+        width: 50%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #fff;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    td {
+        background-color: rgba(8, 8, 8, 0.9);
+    }
+
+    tr:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+</style>

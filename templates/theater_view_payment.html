@@ -1,0 +1,109 @@
+{% include 'theater_header.html' %}
+
+<body style="background-image: url(/static/filmi3.jpg); background-repeat: no-repeat; background-size: cover; color: white; position: relative;">
+
+    <div class="overlay"></div>
+
+    <center>
+        <div class="table-container">
+            <h1>User Payments</h1>
+            <table>
+                <tr>
+                    <th>User</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+
+                {% for i in data %}
+                <tr>
+                    <td>{{ i.user }}</td>
+                    <td>{{ i.total }}</td>
+                    <td>{{ i.date }}</td>
+                    <td>{{ i.status }}</td>
+                    <td>
+                        <a href="theater_view_detail/{{ i.id }}" class="btn">View Details</a>
+                        <a href="theater_view_customer/{{ i.id }}" class="btn delete-btn">View Customer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </center>
+    <br><br><br><br><br><br><br><br><br><br>
+
+    {% include 'footer.html' %}
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        position: relative;
+        color: white;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+
+    .table-container {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px auto;
+        width: 70%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #fff;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    td {
+        background-color: rgba(8, 8, 8, 0.9);
+    }
+
+    tr:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+        margin-left: 10px;
+    }
+
+    .delete-btn:hover {
+        background-color: #c82333;
+    }
+</style>

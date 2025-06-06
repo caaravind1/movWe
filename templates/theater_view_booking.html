@@ -1,0 +1,241 @@
+{% include 'theater_header.html' %}
+
+<body style="background-image: url(/static/filmi3.jpg); background-repeat: no-repeat; background-size: cover; color: white; position: relative;">
+
+    <div class="overlay"></div>
+
+    <center>
+        <div class="table-container">
+            <h1>View Details</h1>
+            <table>
+                <tr>
+                    <th>Sl. No</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+
+                {% for i in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.total }}</td>
+                    <td>{{ i.date }}</td>
+                    <td>{{ i.status }}</td>
+                    <td>
+                        <a href="theater_view_detail/{{ i.id }}" class="btn">View Details</a>
+                        <a href="theater_view_customer/{{ i.id }}" class="btn">View Customer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <!-- Revenue Graph Container -->
+        <div class="graph-container">
+            <h2>Revenue Analysis</h2>
+            <canvas id="revenue-chart" width="800" height="400"></canvas>
+        </div>
+    </center>
+    <br><br><br><br><br><br><br><br><br><br>
+
+    {% include 'footer.html' %}
+    
+    <!-- Revenue Graph Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the canvas element
+            const canvas = document.getElementById('revenue-chart');
+            const ctx = canvas.getContext('2d');
+            
+            // Extract data from Django template
+            const bookingData = [
+                {% for i in data %}
+                    {
+                        date: "{{ i.date }}",
+                        total: {{ i.total }}
+                    }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ];
+            
+            // If no data, show message
+            if (bookingData.length === 0) {
+                ctx.fillStyle = 'white';
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('No revenue data available', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+            
+            // Setup chart dimensions
+            const padding = 60;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+            
+            // Find max value for scaling
+            const maxTotal = Math.max(...bookingData.map(item => item.total));
+            const rounded = Math.ceil(maxTotal / 1000) * 1000;
+            
+            // Draw chart background
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.fillRect(padding, padding, chartWidth, chartHeight);
+            
+            // Draw Y-axis
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, padding + chartHeight);
+            ctx.stroke();
+            
+            // Draw X-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding + chartHeight);
+            ctx.lineTo(padding + chartWidth, padding + chartHeight);
+            ctx.stroke();
+            
+            // Draw Y-axis labels
+            ctx.fillStyle = 'white';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'right';
+            
+            const ySteps = 5;
+            for (let i = 0; i <= ySteps; i++) {
+                const value = Math.round((rounded / ySteps) * i);
+                const y = padding + chartHeight - (i / ySteps) * chartHeight;
+                
+                // Draw horizontal grid line
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(padding + chartWidth, y);
+                ctx.stroke();
+                
+                // Draw label
+                ctx.fillStyle = 'white';
+                ctx.fillText(value, padding - 5, y + 4);
+            }
+            
+            // Draw bars and X-axis labels
+            const barWidth = chartWidth / bookingData.length - 10;
+            
+            bookingData.forEach((item, index) => {
+                const x = padding + index * (chartWidth / bookingData.length) + (chartWidth / bookingData.length - barWidth) / 2;
+                const barHeight = (item.total / rounded) * chartHeight;
+                const y = padding + chartHeight - barHeight;
+                
+                // Draw bar
+                ctx.fillStyle = '#28a745';
+                ctx.fillRect(x, y, barWidth, barHeight);
+                
+                // Draw bar outline
+                ctx.strokeStyle = '#218838';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(x, y, barWidth, barHeight);
+                
+                // Draw X-axis label (date)
+                ctx.fillStyle = 'white';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.save();
+                ctx.translate(x + barWidth / 2, padding + chartHeight + 10);
+                ctx.rotate(-Math.PI / 4);
+                ctx.fillText(item.date, 0, 0);
+                ctx.restore();
+                
+                // Draw value above bar
+                ctx.fillStyle = 'white';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(item.total, x + barWidth / 2, y - 5);
+            });
+            
+            // Draw chart title
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Revenue by Date', canvas.width / 2, 30);
+        });
+    </script>
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        position: relative;
+        color: white;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+
+    .table-container {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px auto;
+        width: 70%;
+    }
+
+    .graph-container {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px auto;
+        width: 70%;
+    }
+
+    #revenue-chart {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #fff;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    td {
+        background-color: rgba(8, 8, 8, 0.9);
+    }
+
+    tr:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+    
+    h2 {
+        color: white;
+        margin-bottom: 20px;
+    }
+</style>
